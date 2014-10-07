@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bounce Blocks</title>
+	</head>
+	<body>
+		<canvas height="1000" width="1000"></canvas>
+
+		<div id="holder">
+			
+		</div>
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/jquery.easing/js/jquery.easing.min.js"></script>
+		<script>
+			$(function() {
+
+				function animate(cbf, finish) {
+					var callback = cbf,
+						t = 0,
+						d = 450;
+									
+					var interval = setInterval(function() {
+						if(t < d) {
+							t += 10;
+							val = jQuery.easing["easeOutElastic"](0, t, 0, 1, d);
+							callback(val);
+						} else {
+							clearInterval(interval);
+							if(typeof finish == "function") { finish(); }
+						}
+					}, 10);
+				}
+				
+				var ctx = $("canvas").get(0).getContext("2d");
+				
+				var Rectangle = function(ctx) {
+					var x = 0,
+						y = 0,
+						height = 20,
+						width = 20,
+						color = "#ed228e",
+						ctx = ctx;
+					
+					this.render = function() {
+						ctx.beginPath();
+							ctx.fillStyle = color;
+							ctx.fillRect(x, y, width, height);
+							ctx.fill();
+						ctx.closePath();
+					};
+					
+					this.setCoordinates = function(newX, newY) {
+						x = newX;
+						y = newY;
+					};
+					
+					this.setDimensions = function(newH, newW) {
+						height = newH;
+						width = newW;
+					}
+					
+					this.setColor = function(hex) {
+						color = hex;
+					}
+				
+				};
+				
+				function RGB2HTML(red, green, blue) {
+				    var decColor = red + 256 * green + 65536 * blue;
+				    return decColor.toString(16);
+				}
+				
+				var BounceBlockAnimation = function(params) {
+					var cfg = $.extend({
+						blocks: 40,
+						ctx: null
+					}, params),
+						count = 0;
+					
+					var width = 10,
+						height = 100;
+						
+					function init() {
+						if(ctx !== null) {
+							run();
+						}	
+					}
+					
+					function run() {
+						if(count < cfg.blocks) {
+							this.r = new Rectangle(ctx);
+							this.r.setDimensions(height, width);
+							this.r.setColor("#" + RGB2HTML(40 + (count * 5) , 40 + (count * 5), 16 + (count * 2)));
+							
+							animate(actions, run);
+							count++;
+						}
+					}
+					
+					function actions(val) {
+						ctx.clearRect(count * width, 0, 1000, 1000);
+						this.r.setCoordinates(count * width, val * 100);	
+						this.r.render();
+					}
+
+					init();
+				};	
+				
+				var animation = new BounceBlockAnimation();
+			});
+		</script>
+	</body>
+</html>
