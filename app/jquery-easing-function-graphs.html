@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+	<head>
+		<title>jQuery Easing Function Graphs</title>
+		<style>
+			body {
+				font-family: "Courier New";
+			}
+			h2 {
+				clear: both;
+			}
+			.holder {
+				width: 400px;
+				height: 150px;
+				position: relative;
+			}
+			.bar {
+				width: 1px;
+				background: none;
+				border-top: 1px solid #000;
+				
+				bottom: 0;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Easing Function Visualizations</h1>
+		<p>
+			Loops through the jQuery easing methods and displays a graph
+			of what the method looks like over time. 
+		</p>
+		<hr />
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/jquery.easing/js/jquery.easing.min.js"></script>
+		<script>			
+			// x, time, begin, change, duration
+			function spitOutAllEasingValues(easingType, x, t, b, c, d) {
+			    var val = 0;
+			
+				$("body").append('<div class="holder"></div>');
+				
+				$lastHolder = $(".holder:last");
+				
+			    while(t < d) {
+					t += 1;
+		            val = jQuery.easing[easingType](x, t, b, c , d);
+					
+					$lastHolder.append("<div class='bar' style='background: #" + Math.floor((256 * val) + 80).toString(16)  +  "ee" + Math.floor((256 * val) + 50).toString(16) + "; left: "+ t +"px; height: "+(250 * val)+"px'></div>");
+				} 
+				
+				return t;
+			}
+		
+			$(function() {
+				for(var i in jQuery.easing) {
+					if(i != "def" && i != "linear" && i !== "jswing") {
+						$('body').append("<h2>" + i + "</h2>");
+
+						spitOutAllEasingValues(i, 0, 0, 0, .5, 500);
+						$('body').append('<br /><hr />');
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
