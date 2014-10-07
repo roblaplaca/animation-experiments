@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Wavy Loader</title>
+		<style>
+			body {
+				font-family: "Lucida Grande";
+				font-size: 46px;
+			}
+			.wavy span {
+				position: relative;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wavy">
+			Loading...
+		</div>
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="scripts/vendor/jquery.box2d.min.js"></script>
+		<script>
+			$(function() {
+				$(".wavy").each(function() {
+					var $this = $(this);
+
+					var text = $this.text();
+					var chars = text.split("");
+					var spanChars = "";
+
+					for( var i=0, len = chars.length; i<len; i++ ) {
+						spanChars += "<span>" + chars[i] + "</span>";
+					}
+
+					$this.html(spanChars);
+						
+					function waveAnimation() {
+						var $spans = $this.find("span");
+						$spans.each(function(i) {
+							$(this).delay(i * 150).animate({
+								top: -20
+							}, 300).animate({
+								top: 10
+							}, 300).animate({
+								top: 0
+							}, 300);
+						});
+					}
+
+					function explodeAnimation() {
+						var $spans = $this.find("span");
+
+						$spans.box2d({
+							'y-velocity': 50,
+							'x-velocity': 5,
+							restitution: .7
+						}).delay(1500).fadeOut(function() {
+							$(this).remove();
+						});
+						
+						// $spans.each(function(i) {
+						// 	var direction = (Math.round( Math.random() )) ? -1 : 1;
+						// 	$(this).animate({
+						// 		top: -1 * (Math.random() * 1000),
+						// 		left: direction * (Math.random() * 10000)
+						// 	});
+						// });	
+					}
+					
+					var animationInterval = setInterval(waveAnimation, 3000);
+					waveAnimation();
+
+					setTimeout(function() {
+						clearInterval(animationInterval);
+						explodeAnimation();
+					}, 5000);
+					
+
+				});
+			});
+		</script>
+	</body>	
+</html>
