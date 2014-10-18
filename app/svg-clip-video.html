@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+	<head>
+		<title>SVG mask</title>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+			video {
+				width: 100%;
+				mask: url(images/bird.svg);
+    			-webkit-mask: url(images/bird.svg) center center ;
+			}
+		</style>
+	</head>
+
+	<body>
+		<video loop autoplay>
+			<source src="videos/fireworks.mp4" />
+		</video>
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	</body>	
+</html>
