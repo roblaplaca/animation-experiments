@@ -6,14 +6,19 @@
 			body {
 				font-family: "Courier New";
 			}
-
+			.cards {
+				clear: both;
+				margin-top: 40px;
+				
+				text-align: center;
+			}
 			.panel {
 				display: inline-block;
 				height: 316px;
 				width: 228px;
 
 				-webkit-transition: all 200ms ease-in;
-				-webkit-transform: translateX(50px);
+				/*-webkit-transform: translateX(50px);*/
 
 				-webkit-perspective: 800px;
 				-moz-perspective: 800px;
@@ -91,26 +96,29 @@
 	<body>
 		<h1>Card Flip</h1>
 		<p>An animation for dealing cards</p>
+		<hr />
 
-		<div class="panel">
-			<img class="front" src="images/card-front.svg" />
-			<img class="back" src="images/card-back.svg" />
-		</div>
-		<div class="panel">
-			<img class="front" src="images/card-front.svg" />
-			<img class="back" src="images/card-back.svg" />
-		</div>
-		<div class="panel">
-			<img class="front" src="images/card-front.svg" />
-			<img class="back" src="images/card-back.svg" />
-		</div>
-		<div class="panel">
-			<img class="front" src="images/card-front.svg" />
-			<img class="back" src="images/card-back.svg" />
-		</div>
-		<div class="panel">
-			<img class="front" src="images/card-front.svg" />
-			<img class="back" src="images/card-back.svg" />
+		<div class="cards">
+			<div class="panel">
+				<img class="front" src="images/card-front.svg" />
+				<img class="back" src="images/card-back.svg" />
+			</div>
+			<div class="panel">
+				<img class="front" src="images/card-front.svg" />
+				<img class="back" src="images/card-back.svg" />
+			</div>
+			<div class="panel">
+				<img class="front" src="images/card-front.svg" />
+				<img class="back" src="images/card-back.svg" />
+			</div>
+			<div class="panel">
+				<img class="front" src="images/card-front.svg" />
+				<img class="back" src="images/card-back.svg" />
+			</div>
+			<div class="panel">
+				<img class="front" src="images/card-front.svg" />
+				<img class="back" src="images/card-back.svg" />
+			</div>
 		</div>
 
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
