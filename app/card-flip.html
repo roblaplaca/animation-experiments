@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Card Flip Animation</title>
+		<style>
+			body {
+				font-family: "Courier New";
+			}
+
+			.panel {
+				display: inline-block;
+				height: 316px;
+				width: 228px;
+
+				-webkit-transition: all 200ms ease-in;
+				-webkit-transform: translateX(50px);
+
+				-webkit-perspective: 800px;
+				-moz-perspective: 800px;
+				perspective: 800px;
+			}
+			.panel.active {
+				opacity: 1;
+				-webkit-transform: translateX(0);
+			}
+			.panel .front {
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 900;
+
+				-webkit-transform: rotateX(0deg) rotateY(0deg);
+					 -moz-transform: rotateX(0deg) rotateY(0deg);
+								transform: rotateX(0deg) rotateY(0deg);
+
+				-webkit-transform-style: preserve-3d;
+					 -moz-transform-style: preserve-3d;
+								transform-style: preserve-3d;
+
+				-webkit-backface-visibility: hidden;
+					 -moz-backface-visibility: hidden;
+								backface-visibility: hidden;
+
+				/* -- transition is the magic sauce for animation -- */
+				-webkit-transition: all .6s ease-in-out;
+								transition: all .6s ease-in-out;
+			}
+			.panel.active .front {
+				z-index: 900;
+
+				-webkit-transform: rotateY(180deg);
+					 -moz-transform: rotateY(180deg);
+								transform: rotateY(180deg);
+			}
+
+			.panel .back {
+				float: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 800;
+				width: inherit;
+				height: inherit;
+
+				-webkit-transform: rotateY(-180deg);
+				-moz-transform: rotateY(-179deg); /* setting to 180 causes an unnatural-looking half-flip */
+				transform: rotateY(-179deg);
+
+				-webkit-transform-style: preserve-3d;
+					 -moz-transform-style: preserve-3d;
+								transform-style: preserve-3d;
+
+				-webkit-backface-visibility: hidden;
+					 -moz-backface-visibility: hidden;
+								backface-visibility: hidden;
+
+				/* -- transition is the magic sauce for animation -- */
+				-webkit-transition: all .6s ease-in-out;
+				transition: all .6s ease-in-out;
+			}
+
+			.panel.active .back {
+				z-index: 1000;
+
+				-webkit-transform: rotateX(0deg) rotateY(0deg);
+				-moz-transform: rotateX(0deg) rotateY(0deg);
+				transform: rotateX(0deg) rotateY(0deg);
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Card Flip</h1>
+		<p>An animation for dealing cards</p>
+
+		<div class="panel">
+			<img class="front" src="images/card-front.svg" />
+			<img class="back" src="images/card-back.svg" />
+		</div>
+		<div class="panel">
+			<img class="front" src="images/card-front.svg" />
+			<img class="back" src="images/card-back.svg" />
+		</div>
+		<div class="panel">
+			<img class="front" src="images/card-front.svg" />
+			<img class="back" src="images/card-back.svg" />
+		</div>
+		<div class="panel">
+			<img class="front" src="images/card-front.svg" />
+			<img class="back" src="images/card-back.svg" />
+		</div>
+		<div class="panel">
+			<img class="front" src="images/card-front.svg" />
+			<img class="back" src="images/card-back.svg" />
+		</div>
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script>
+			$(function() {
+				var $panels = $('.panel'),
+					ACTIVE_CLASS = 'active';
+
+				$panels.each(function(i, itm) {
+					setTimeout(function() {
+						$(itm).addClass(ACTIVE_CLASS);
+					}, i*200);
+				});
+			});
+		</script>
+	</body>
+</html>
