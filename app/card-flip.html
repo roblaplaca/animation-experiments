@@ -13,6 +13,8 @@
 				text-align: center;
 			}
 			.panel {
+				cursor: pointer;
+
 				display: inline-block;
 				height: 316px;
 				width: 228px;
@@ -24,9 +26,12 @@
 				-moz-perspective: 800px;
 				perspective: 800px;
 			}
+			/*.panel:hover {
+				-webkit-transform: scale(.95);
+			}*/
 			.panel.active {
 				opacity: 1;
-				-webkit-transform: translateX(0);
+				/*-webkit-transform: translateX(0);*/
 			}
 			.panel .front {
 				position: absolute;
@@ -131,6 +136,10 @@
 					setTimeout(function() {
 						$(itm).addClass(ACTIVE_CLASS);
 					}, i*200);
+				});
+
+				$panels.on('click', function() {
+					$(this).toggleClass(ACTIVE_CLASS);
 				});
 			});
 		</script>
