@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Audio Visualizer</title>
+		<style>
+			body {
+				font-family: "Courier New";
+			}
+			.bar {
+				height: 10px;
+				background: #c00;
+				width: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Audio Visualizer</h1>
+		<p>etc...</p>
+		<hr />
+
+		<audio id="player" class="hideIfNoApi" controls="controls" src="audio/movement-proposition.mp3"> </audio>
+
+		<div class="bar"></div>
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/requestAnimationFrame/app/requestAnimationFrame.js"></script>
+		<script>
+
+			/**
+			 * @returns {AudioContext}
+			 */
+
+			function getAudioContext() {
+				var context = null;
+				
+				if (typeof AudioContext !== "undefined") {
+					context = new AudioContext();
+				} else if (typeof webkitAudioContext !== "undefined") {
+					context = new webkitAudioContext();
+				}
+
+				return context;
+			}
+
+			/**
+			 * @param {Array} arr
+			 * @returns {Number}
+			 */
+
+			function averageArray(arr) {
+				var sum = 0;
+
+				for(var i = 0, len = arr.length; i < len; i++) {
+				    sum += parseInt(arr[i], 10);
+				}
+
+				return sum / arr.length;
+			}
+
+			$(function() {
+				var context = getAudioContext(),
+					analyser = null;
+				
+				if( context !== null ) {
+					analyser = context.createAnalyser();
+					analyser.fftSize = 64;
+
+					var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+					(function update() {
+						requestAnimationFrame(update);
+							
+						analyser.getByteFrequencyData(frequencyData);
+
+						var loudness = averageArray(frequencyData);
+						$('.bar').css('width', 2 * loudness);
+
+						console.log(loudness);	
+					})();
+
+					$("#player").bind('canplay', function() {
+						var source = context.createMediaElementSource(this);
+						source.connect(analyser);
+						analyser.connect(context.destination);
+					});
+				}
+			});
+		</script>
+	</body>
+</html>
